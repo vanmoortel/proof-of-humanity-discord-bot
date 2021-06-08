@@ -3,7 +3,8 @@
 ## **Config**
 Environment variables
 ```
-DAL_FS_DB: Database JSON containing registered users
+DAL_FS_DB_PATH: Path to database JSON containing registered users
+DAL_FS_DB_NAME: Filename Database JSON containing registered users
 DAL_ETH_PROVIDER: URL for RPC ETH
 
 SERVICE_DISCORD_TOKEN: Discord Bot Token
