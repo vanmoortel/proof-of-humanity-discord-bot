@@ -1,0 +1,40 @@
+{
+  "APP_NAME": "Dicord Bot Proof Of Humanity",
+  "INSTANCE_NAME": "main-server",
+  "NODE_ENV": "test",
+  "HTTP": {
+    "SSL": false,
+    "PORT": 3000,
+    "CERT": "",
+    "PRIVKEY": ""
+  },
+  "DAL": {
+    "FS_DB": {
+      "PATH": "",
+      "NAME": ""
+    },
+    "ETH_PROVIDER": {
+      "URL": ""
+    }
+  },
+  "SERVICE": {
+    "DISCORD": {
+      "ENABLE": true,
+      "TOKEN": "",
+      "GUILD": "",
+      "REGISTERED_ROLE": ""
+    },
+    "WINSTON": {
+      "LOG_DIR": "",
+      "LOG_LEVEL": "debug",
+      "LOG_LOGSTASH": {
+        "NAME": "",
+        "VERSION": "",
+        "HOST": "",
+        "PORT": "",
+        "SSL": false
+      },
+      "PRINT_REQUEST": true
+    }
+  }
+}

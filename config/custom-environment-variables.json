@@ -1,0 +1,49 @@
+{
+  "APP_NAME": "APP_NAME",
+  "INSTANCE_NAME": "INSTANCE_NAME",
+  "NODE_ENV": "NODE_ENV",
+  "HTTP": {
+    "SSL": {
+      "__name": "HTTP_SSL",
+      "__format": "json"
+    },
+    "PORT": "HTTP_PORT",
+    "CERT": "HTTP_CERT",
+    "PRIVKEY": "HTTP_PRIVKEY"
+  },
+  "DAL": {
+    "FS_DB": {
+      "PATH": "DAL_FS_DB_PATH",
+      "NAME": "DAL_FS_DB_NAME"
+    },
+    "ETH_PROVIDER": {
+      "URL": "DAL_ETH_PROVIDER_URL"
+    }
+  },
+  "SERVICE": {
+    "DISCORD": {
+      "ENABLE": "SERVICE_DISCORD_ENABLE",
+      "TOKEN": "SERVICE_DISCORD_TOKEN",
+      "GUILD": "SERVICE_DISCORD_GUILD",
+      "REGISTERED_ROLE": "SERVICE_DISCORD_REGISTERED_ROLE"
+    },
+    "WINSTON": {
+      "LOG_DIR": "SERVICE_WINSTON_LOG_DIR",
+      "LOG_LEVEL": "SERVICE_WINSTON_LOG_LEVEL",
+      "LOG_LOGSTASH": {
+        "NAME": "SERVICE_WINSTON_LOG_LOGSTASH_NAME",
+        "VERSION": "SERVICE_WINSTON_LOG_LOGSTASH_VERSION",
+        "HOST": "SERVICE_WINSTON_LOG_LOGSTASH_HOST",
+        "PORT": "SERVICE_WINSTON_LOG_LOGSTASH_PORT",
+        "SSL": {
+          "__name": "SERVICE_WINSTON_LOG_LOGSTASH_SSL",
+          "__format": "json"
+        }
+      },
+      "PRINT_REQUEST": {
+        "__name": "SERVICE_WINSTON_PRINT_REQUEST",
+        "__format": "json"
+      }
+    }
+  }
+}
