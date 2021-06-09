@@ -17,7 +17,7 @@ import { makeUser } from '../../factory/user';
 import logger from '../../../service/winston';
 import { isRegistered } from '../../../persistance/query/poh';
 import { ethProvider } from '../../../persistance/dal';
-import { readAll, readOneByPublicKey, upsertOneByDiscordId } from '../../../persistance/query/user';
+import { readAll, upsertOneByPublicKey } from '../../../persistance/query/user';
 
 /*
  *
@@ -68,24 +68,14 @@ export const putUser = async (
     const user: User = makeUser(discordId, address, true, undefined, undefined);
     logger.debug('Make user done.');
 
-    logger.debug('Retrieve user if already in DB...');
-    const readResult: Response<User> = await readOneByPublicKey(user.publicKey, mutex);
-    if (readResult.data) {
-      logger.debug('Remove role old user...');
-      logger.debug(readResult.data.discordId);
-      const oldMember = guild.members.cache
-        .find((member) => member.user.id === readResult.data.discordId);
-      if (oldMember) {
-        await oldMember.roles.remove(config.get('SERVICE.DISCORD.REGISTERED_ROLE'));
-        logger.debug('Remove role old user done.');
-      }
-    }
-    logger.debug('Retrieve user if already in DB done.');
-
     logger.debug('Upsert new/updated user...');
-    const upsertResponse: Response<User> = await upsertOneByDiscordId(user, mutex);
+    const upsertResponse: Response<User> = await upsertOneByPublicKey(user, mutex);
     if (!upsertResponse.data) return upsertResponse;
     logger.debug('Upsert new/updated user done.');
+
+    logger.debug('Sybil check...');
+    await postCheckExpired({}, guild, mutex);
+    logger.debug('Sybil check done.');
 
     logger.debug('Set discord role registered...');
     await discordMember.roles.add(config.get('SERVICE.DISCORD.REGISTERED_ROLE'));
@@ -133,7 +123,7 @@ export const postCheckExpired = async (
         ethProvider());
       if (!isRegisteredResult.data) {
         await member.roles.remove(config.get('SERVICE.DISCORD.REGISTERED_ROLE'));
-        const upsertResponse: Response<User> = await upsertOneByDiscordId({
+        const upsertResponse: Response<User> = await upsertOneByPublicKey({
           ...user,
           registered: false,
           updatedAt: Moment().toISOString(),

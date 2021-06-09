@@ -95,9 +95,8 @@ const upsertOne = async (
   }
 };
 
-export const upsertOneByDiscordId = async (
+export const upsertOneByPublicKey = async (
   user: User,
   mutex: any,
-): Promise<Response<User>> => upsertOne((u) => u.discordId !== user.discordId
-    && u.publicKey !== user.publicKey,
-{ ...makeUserFsDbFromUser(user) }, mutex);
+): Promise<Response<User>> => upsertOne((u) => u.publicKey !== user.publicKey,
+  { ...makeUserFsDbFromUser(user) }, mutex);
