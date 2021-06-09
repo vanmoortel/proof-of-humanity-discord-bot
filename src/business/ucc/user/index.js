@@ -17,7 +17,7 @@ import { makeUser } from '../../factory/user';
 import logger from '../../../service/winston';
 import { isRegistered } from '../../../persistance/query/poh';
 import { ethProvider } from '../../../persistance/dal';
-import { readAll, upsertOneByDiscordId } from '../../../persistance/query/user';
+import { readAll, readOneByPublicKey, upsertOneByDiscordId } from '../../../persistance/query/user';
 
 /*
  *
@@ -67,6 +67,20 @@ export const putUser = async (
     logger.debug('Make user...');
     const user: User = makeUser(discordId, address, true, undefined, undefined);
     logger.debug('Make user done.');
+
+    logger.debug('Retrieve user if already in DB...');
+    const readResult: Response<User> = await readOneByPublicKey(user.publicKey, mutex);
+    if (readResult.data) {
+      logger.debug('Remove role old user...');
+      logger.debug(readResult.data.discordId);
+      const oldMember = guild.members.cache
+        .find((member) => member.user.id === readResult.data.discordId);
+      if (oldMember) {
+        await oldMember.roles.remove(config.get('SERVICE.DISCORD.REGISTERED_ROLE'));
+        logger.debug('Remove role old user done.');
+      }
+    }
+    logger.debug('Retrieve user if already in DB done.');
 
     logger.debug('Upsert new/updated user...');
     const upsertResponse: Response<User> = await upsertOneByDiscordId(user, mutex);

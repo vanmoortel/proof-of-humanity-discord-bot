@@ -42,6 +42,11 @@ export const readOneByDiscordId = (
   mutex: any,
 ): Promise<Response<User>> => readOne((u) => u.discordId === discordId, mutex);
 
+export const readOneByPublicKey = (
+  publicKey: string,
+  mutex: any,
+): Promise<Response<User>> => readOne((u) => u.publicKey === publicKey, mutex);
+
 const read = async (
   offset: number = 0,
   limit: number = 999999999,
