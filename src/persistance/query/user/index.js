@@ -15,8 +15,8 @@ import {
 
 const collection = 'user';
 
-const readDb = async (): Promise<{ user: any[] }> => fs.promises.readFile(join(config.get('DAL.FS_DB.PATH') || __dirname, config.get('DAL.FS_DB.NAME') || 'db.json'), 'utf8').then((raw) => JSON.parse(raw));
-const writeDb = async (db: {user: any[]}): Promise<void> => fs.promises.writeFile(join(config.get('DAL.FS_DB.PATH') || __dirname, config.get('DAL.FS_DB.NAME') || 'db.json'), JSON.stringify(db), 'utf8');
+const readDb = async (): Promise<{ user: any[] }> => fs.promises.readFile(join(config.get('DAL.FS_DB.PATH') || process.cwd(), config.get('DAL.FS_DB.NAME') || 'db.json'), 'utf8').then((raw) => JSON.parse(raw));
+const writeDb = async (db: {user: any[]}): Promise<void> => fs.promises.writeFile(join(config.get('DAL.FS_DB.PATH') || process.cwd(), config.get('DAL.FS_DB.NAME') || 'db.json'), JSON.stringify(db), 'utf8');
 
 const readOne = async (
   filter: Object,

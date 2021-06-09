@@ -9,7 +9,7 @@ import logger from '../../service/winston';
 export const initFsDb = async () => {
   try {
     let db = {};
-    const filepath = join(config.get('DAL.FS_DB.PATH') || __dirname, config.get('DAL.FS_DB.NAME') || 'db.json');
+    const filepath = join(config.get('DAL.FS_DB.PATH') || process.cwd(), config.get('DAL.FS_DB.NAME') || 'db.json');
 
     logger.debug('Check if json DB exist...');
     try {
